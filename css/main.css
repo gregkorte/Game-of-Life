@@ -1,0 +1,29 @@
+body {
+	margin: 60px auto;
+	text-align: center;
+}
+
+table {
+	font-size: 50%;
+	border: 1px solid black;
+	margin: 20px auto;
+}
+
+td, tr {
+	border: 1px solid black;
+}
+
+td {
+	height: 12px;
+	width: 12px;
+}
+
+td.alive {
+	background: green;
+	color: white;
+}
+
+td.dead {
+	background: gray;
+	color: gray;
+}
