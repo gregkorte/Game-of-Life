@@ -1,5 +1,5 @@
 body {
-	margin: 60px auto;
+	margin: 1% auto;
 	text-align: center;
 }
 
@@ -26,4 +26,9 @@ td.alive {
 td.dead {
 	background: gray;
 	color: gray;
+}
+
+.gameboard {
+	display: grid;
+	grid-template-columns: 20% 80%;
 }

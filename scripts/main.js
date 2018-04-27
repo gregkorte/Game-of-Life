@@ -1,11 +1,17 @@
 let matrix;
 let iteration;
+let births = 0;
+let deaths = 0;
+let longestLife = 0;
+let startingPopulation = 0;
+let currentPopulation = 0;
+let lifecycle = 0;
+let mortalityRate = 0;
 
 document.addEventListener('DOMContentLoaded', function(){  //Loads the DOM
 
 	function populate(){  //Places populate() into memory
 		let table = document.getElementById('grid');  //Creates variable for table with ID grid
-		console.log(table);
 		table.innerHTML = '';  //Clears table for population
 		for (i = 0; i < matrix.length; i++){  //Iterates through first tier array
 			let row = document.createElement('tr');  //Creates variable & tr element
@@ -17,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function(){  //Loads the DOM
 		  	existenceState(matrix[i][j], data);  //Executes existenceState to apply classes
 			}
 		};
+		checkPopulation();
 	}
 
 	function existenceState(mat, data){  //Places existenceState into memory
@@ -26,6 +33,50 @@ document.addEventListener('DOMContentLoaded', function(){  //Loads the DOM
 		else {  //Sets class to dead
 			data.setAttribute('class', 'dead');
 		}
+	}
+
+	function checkPopulation(){
+		lifecycle++;
+		let current = 0;
+		let cell = document.querySelectorAll('td');
+		cell.forEach(function(c){
+			if(c.getAttribute('class') === 'alive'){
+				if(lifecycle === 1){
+				startingPopulation++;
+				} else {
+					current++;
+				}
+			}
+		})
+		lifecycle === 1 ? currentPopulation = startingPopulation : currentPopulation = current;
+		calculateMortality();
+		populateDom();
+	}
+
+	function calculateMortality(){
+		mortalityRate = (100 -(births / deaths).toFixed(2) * 100);
+	}
+
+	function populateDom(){
+		document.querySelector('.starting-population').innerHTML = `<div>Starting Population: ${startingPopulation}</div>`;
+		document.querySelector('.current-population').innerHTML = `<div>Current Population: ${currentPopulation}</div>`;
+		document.querySelector('.iteration').innerHTML = `<div>Iteration: ${lifecycle}</div>`;
+		document.querySelector('.births').innerHTML = `<div>Births: ${births}</div>`;
+		document.querySelector('.deaths').innerHTML = `<div>Deaths: ${deaths}</div>`;
+		document.querySelector('.longest-life').innerHTML = `<div>Longest Life: ${longestLife}</div>`;
+		document.querySelector('.mortality-rate').innerHTML = `<div>Mortality Rate: ${mortalityRate}%</div>`;
+	}
+
+	function resetDom(){
+		lifecycle = 0;
+		births = 0;
+		deaths = 0;
+		longestLife = 0;
+		startingPopulation = 0;
+		currentPopulation = 0;
+		longestLife = 0;
+		mortalityRate = 0;
+		populateDom();
 	}
 
 	function livingNeighborCount(x, y){  //Places livingNeighborCount() into memory
@@ -75,9 +126,11 @@ document.addEventListener('DOMContentLoaded', function(){  //Loads the DOM
 
 				if(livingNeighbors < 2 || livingNeighbors > 3){
 					nextCellState = 0;
+					deaths++;
 				}
 				else if(livingNeighbors === 3){
 					nextCellState = 1;
+					births++;
 				}
 				else {
 					nextCellState = currentCell;
@@ -92,6 +145,7 @@ document.addEventListener('DOMContentLoaded', function(){  //Loads the DOM
 
 	document.querySelector('#populate').addEventListener('click', function(){
 		clearInterval(iteration);
+		resetDom();
 		matrix = randomize(50, 50);
 		populate();  //Executes populate() to create grid
 	})

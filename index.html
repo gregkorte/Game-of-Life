@@ -12,16 +12,32 @@
 
     </head>
     <body>
-      <h1>The Grid</h1>
-      <input type="submit" id="populate" value="Populate">
-      <input type="submit" id="tick" value="Tick">
-      <input type="submit" id="run" value="Run">
-      <input type="submit" id="stop" value="Stop">
-      <table id="grid">
+      <div class="gameboard">
+        <div>
+          <h1>The Grid</h1>
+          <input type="submit" id="populate" value="Populate">
+          <input type="submit" id="tick" value="Tick">
+          <input type="submit" id="run" value="Run">
+          <input type="submit" id="stop" value="Stop">
+          <div class="stats">
+            <div class="starting-population"></div>
+            <div class="current-population"></div>
+            <div class="iteration"></div>
+            <div class="births"></div>
+            <div class="deaths"></div>
+            <div class="longest-life"></div>
+            <div class="mortality-rate"></div>
+            <div></div>
+          </div>
+        </div>
+        <div>
+          <table id="grid">
 
-        <!-- This is where my content will go -->
+            <!-- This is where my content will go -->
 
-      </table>
+          </table>
+        </div>
+      </div>
       <script src="scripts/main.js"></script>
     </body>
 </html>
